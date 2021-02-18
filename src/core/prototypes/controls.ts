@@ -228,6 +228,8 @@ export interface WidgetManager {
     property: Property,
     options: NestedChartEditorOptions
   ): Widget;
+
+  getCurrentGlyphIndex(plotSegmentId: string): number;
 }
 
 export interface PopupEditor {
