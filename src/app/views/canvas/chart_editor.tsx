@@ -42,6 +42,7 @@ import { MoveSnappingSession } from "./snapping/move";
 import { GuideAxis, GuideProperties } from "../../../core/prototypes/guides";
 import { strings } from "../../../strings";
 import { MappingType } from "../../../core/specification";
+import { toSVGNumber } from "../../../app/utils";
 
 export interface ChartEditorViewProps {
   store: AppStore;
@@ -572,10 +573,14 @@ export class ChartEditorView
             <line
               className="mark-guide"
               key={`k${idx}`}
-              x1={guide.value * this.state.zoom.scale + this.state.zoom.centerX}
-              x2={guide.value * this.state.zoom.scale + this.state.zoom.centerX}
+              x1={toSVGNumber(
+                guide.value * this.state.zoom.scale + this.state.zoom.centerX
+              )}
+              x2={toSVGNumber(
+                guide.value * this.state.zoom.scale + this.state.zoom.centerX
+              )}
               y1={0}
-              y2={this.state.viewHeight}
+              y2={toSVGNumber(this.state.viewHeight)}
             />
           );
         }
@@ -586,13 +591,13 @@ export class ChartEditorView
               className="mark-guide"
               key={`k${idx}`}
               x1={0}
-              x2={this.state.viewWidth}
-              y1={
+              x2={toSVGNumber(this.state.viewWidth)}
+              y1={toSVGNumber(
                 -guide.value * this.state.zoom.scale + this.state.zoom.centerY
-              }
-              y2={
+              )}
+              y2={toSVGNumber(
                 -guide.value * this.state.zoom.scale + this.state.zoom.centerY
-              }
+              )}
             />
           );
         }
@@ -605,33 +610,35 @@ export class ChartEditorView
               <circle
                 className="mark-guide"
                 key={`ck${idx}display`}
-                cx={
+                cx={toSVGNumber(
                   axisGuide.cx * this.state.zoom.scale + this.state.zoom.centerX
-                }
-                cy={
+                )}
+                cy={toSVGNumber(
                   -axisGuide.cy * this.state.zoom.scale +
-                  this.state.zoom.centerY
-                }
-                r={Math.abs(axisGuide.visibleRadius * this.state.zoom.scale)}
+                    this.state.zoom.centerY
+                )}
+                r={toSVGNumber(
+                  Math.abs(axisGuide.visibleRadius * this.state.zoom.scale)
+                )}
               />
               <line
                 key={`lk${idx}display`}
                 className="mark-guide"
-                x1={
+                x1={toSVGNumber(
                   axisGuide.cx * this.state.zoom.scale + this.state.zoom.centerX
-                }
-                y1={
+                )}
+                y1={toSVGNumber(
                   -axisGuide.cy * this.state.zoom.scale +
-                  this.state.zoom.centerY
-                }
-                x2={
+                    this.state.zoom.centerY
+                )}
+                x2={toSVGNumber(
                   axisGuide.angle * this.state.zoom.scale +
-                  this.state.zoom.centerX
-                }
-                y2={
+                    this.state.zoom.centerX
+                )}
+                y2={toSVGNumber(
                   -axisGuide.radius * this.state.zoom.scale +
-                  this.state.zoom.centerY
-                }
+                    this.state.zoom.centerY
+                )}
               />
             </React.Fragment>
           );
@@ -1134,24 +1141,24 @@ export class ChartEditorView
       <g>
         <rect
           className="canvas-region-outer2"
-          x={Math.min(p1t.x, p2t.x) - 3}
-          y={Math.min(p1t.y, p2t.y) - 3}
-          width={Math.abs(p2t.x - p1t.x) + 6}
-          height={Math.abs(p2t.y - p1t.y) + 6}
+          x={toSVGNumber(Math.min(p1t.x, p2t.x) - 3)}
+          y={toSVGNumber(Math.min(p1t.y, p2t.y) - 3)}
+          width={toSVGNumber(Math.abs(p2t.x - p1t.x) + 6)}
+          height={toSVGNumber(Math.abs(p2t.y - p1t.y) + 6)}
         />
         <rect
           className="canvas-region-outer"
-          x={Math.min(p1t.x, p2t.x) - 1}
-          y={Math.min(p1t.y, p2t.y) - 1}
-          width={Math.abs(p2t.x - p1t.x) + 2}
-          height={Math.abs(p2t.y - p1t.y) + 2}
+          x={toSVGNumber(Math.min(p1t.x, p2t.x) - 1)}
+          y={toSVGNumber(Math.min(p1t.y, p2t.y) - 1)}
+          width={toSVGNumber(Math.abs(p2t.x - p1t.x) + 2)}
+          height={toSVGNumber(Math.abs(p2t.y - p1t.y) + 2)}
         />
         <rect
           className="canvas-region"
-          x={Math.min(p1t.x, p2t.x)}
-          y={Math.min(p1t.y, p2t.y)}
-          width={Math.abs(p2t.x - p1t.x)}
-          height={Math.abs(p2t.y - p1t.y)}
+          x={toSVGNumber(Math.min(p1t.x, p2t.x))}
+          y={toSVGNumber(Math.min(p1t.y, p2t.y))}
+          width={toSVGNumber(Math.abs(p2t.x - p1t.x))}
+          height={toSVGNumber(Math.abs(p2t.y - p1t.y))}
         />
         <ResizeHandleView
           zoom={this.state.zoom}
@@ -1281,7 +1288,11 @@ export class ChartEditorView
     const { store } = this.props;
     const width = this.state.viewWidth;
     const height = this.state.viewHeight;
-    const transform = `translate(${this.state.zoom.centerX},${this.state.zoom.centerY}) scale(${this.state.zoom.scale})`;
+    const transform = `translate(${toSVGNumber(
+      this.state.zoom.centerX
+    )},${toSVGNumber(this.state.zoom.centerY)}) scale(${
+      this.state.zoom.scale
+    })`;
     return (
       <div className="chart-editor-view">
         <div className="chart-editor-canvas-view" ref="canvasContainer">
@@ -1290,16 +1301,16 @@ export class ChartEditorView
             ref="canvas"
             x={0}
             y={0}
-            width={width}
-            height={height}
+            width={toSVGNumber(width)}
+            height={toSVGNumber(height)}
           >
             <rect
               className="interaction-handler"
               ref="canvasInteraction"
               x={0}
               y={0}
-              width={width}
-              height={height}
+              width={toSVGNumber(width)}
+              height={toSVGNumber(height)}
             />
             {this.renderChartCanvas()}
             {this.renderBoundsGuides()}

@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as Hammer from "hammerjs";
 import { ZoomInfo } from "../../../../core";
-import { classNames } from "../../../utils";
+import { classNames, toSVGNumber } from "../../../utils";
 
 export interface ResizeHandleViewProps {
   width: number;
@@ -175,129 +175,129 @@ export class ResizeHandleView extends React.Component<
         <g ref="lineY1" style={{ cursor: "ns-resize" }}>
           <line
             className="element-line handle-ghost"
-            x1={fX(x1)}
-            y1={fY(y1)}
-            x2={fX(x2)}
-            y2={fY(y1)}
+            x1={toSVGNumber(fX(x1))}
+            y1={toSVGNumber(fY(y1))}
+            x2={toSVGNumber(fX(x2))}
+            y2={toSVGNumber(fY(y1))}
           />
 
           <line
             className="element-line handle-highlight"
-            x1={fX(x1)}
-            y1={fY(y1)}
-            x2={fX(x2)}
-            y2={fY(y1)}
+            x1={toSVGNumber(fX(x1))}
+            y1={toSVGNumber(fY(y1))}
+            x2={toSVGNumber(fX(x2))}
+            y2={toSVGNumber(fY(y1))}
           />
         </g>
         <g ref="lineY2" style={{ cursor: "ns-resize" }}>
           <line
             className="element-line handle-ghost"
-            x1={fX(x1)}
-            y1={fY(y2)}
-            x2={fX(x2)}
-            y2={fY(y2)}
+            x1={toSVGNumber(fX(x1))}
+            y1={toSVGNumber(fY(y2))}
+            x2={toSVGNumber(fX(x2))}
+            y2={toSVGNumber(fY(y2))}
           />
           <line
             className="element-line handle-highlight"
-            x1={fX(x1)}
-            y1={fY(y2)}
-            x2={fX(x2)}
-            y2={fY(y2)}
+            x1={toSVGNumber(fX(x1))}
+            y1={toSVGNumber(fY(y2))}
+            x2={toSVGNumber(fX(x2))}
+            y2={toSVGNumber(fY(y2))}
           />
         </g>
         <g ref="lineX1" style={{ cursor: "ew-resize" }}>
           <line
             className="element-line handle-ghost"
-            x1={fX(x1)}
-            y1={fY(y1)}
-            x2={fX(x1)}
-            y2={fY(y2)}
+            x1={toSVGNumber(fX(x1))}
+            y1={toSVGNumber(fY(y1))}
+            x2={toSVGNumber(fX(x1))}
+            y2={toSVGNumber(fY(y2))}
           />
           <line
             className="element-line handle-highlight"
-            x1={fX(x1)}
-            y1={fY(y1)}
-            x2={fX(x1)}
-            y2={fY(y2)}
+            x1={toSVGNumber(fX(x1))}
+            y1={toSVGNumber(fY(y1))}
+            x2={toSVGNumber(fX(x1))}
+            y2={toSVGNumber(fY(y2))}
           />
         </g>
         <g ref="lineX2" style={{ cursor: "ew-resize" }}>
           <line
             className="element-line handle-ghost"
-            x1={fX(x2)}
-            y1={fY(y1)}
-            x2={fX(x2)}
-            y2={fY(y2)}
+            x1={toSVGNumber(fX(x2))}
+            y1={toSVGNumber(fY(y1))}
+            x2={toSVGNumber(fX(x2))}
+            y2={toSVGNumber(fY(y2))}
           />
           <line
             className="element-line handle-highlight"
-            x1={fX(x2)}
-            y1={fY(y1)}
-            x2={fX(x2)}
-            y2={fY(y2)}
+            x1={toSVGNumber(fX(x2))}
+            y1={toSVGNumber(fY(y1))}
+            x2={toSVGNumber(fX(x2))}
+            y2={toSVGNumber(fY(y2))}
           />
         </g>
         <circle
           className="element-shape handle-ghost"
           style={{ cursor: "nesw-resize" }}
           ref="cornerX1Y1"
-          cx={fX(x1)}
-          cy={fY(y1)}
+          cx={toSVGNumber(fX(x1))}
+          cy={toSVGNumber(fY(y1))}
           r={5}
         />
         <circle
           className="element-shape handle-ghost"
           style={{ cursor: "nwse-resize" }}
           ref="cornerX2Y1"
-          cx={fX(x2)}
-          cy={fY(y1)}
+          cx={toSVGNumber(fX(x2))}
+          cy={toSVGNumber(fY(y1))}
           r={5}
         />
         <circle
           className="element-shape handle-ghost"
           style={{ cursor: "nwse-resize" }}
           ref="cornerX1Y2"
-          cx={fX(x1)}
-          cy={fY(y2)}
+          cx={toSVGNumber(fX(x1))}
+          cy={toSVGNumber(fY(y2))}
           r={5}
         />
         <circle
           className="element-shape handle-ghost"
           style={{ cursor: "nesw-resize" }}
           ref="cornerX2Y2"
-          cx={fX(x2)}
-          cy={fY(y2)}
+          cx={toSVGNumber(fX(x2))}
+          cy={toSVGNumber(fY(y2))}
           r={5}
         />
         {this.state.dragging ? (
           <g>
             <line
               className="element-line handle-hint"
-              x1={fX(this.state.newX1)}
-              y1={fY(this.state.newY1)}
-              x2={fX(this.state.newX2)}
-              y2={fY(this.state.newY1)}
+              x1={toSVGNumber(fX(this.state.newX1))}
+              y1={toSVGNumber(fY(this.state.newY1))}
+              x2={toSVGNumber(fX(this.state.newX2))}
+              y2={toSVGNumber(fY(this.state.newY1))}
             />
             <line
               className="element-line handle-hint"
-              x1={fX(this.state.newX1)}
-              y1={fY(this.state.newY2)}
-              x2={fX(this.state.newX2)}
-              y2={fY(this.state.newY2)}
+              x1={toSVGNumber(fX(this.state.newX1))}
+              y1={toSVGNumber(fY(this.state.newY2))}
+              x2={toSVGNumber(fX(this.state.newX2))}
+              y2={toSVGNumber(fY(this.state.newY2))}
             />
             <line
               className="element-line handle-hint"
-              x1={fX(this.state.newX1)}
-              y1={fY(this.state.newY1)}
-              x2={fX(this.state.newX1)}
-              y2={fY(this.state.newY2)}
+              x1={toSVGNumber(fX(this.state.newX1))}
+              y1={toSVGNumber(fY(this.state.newY1))}
+              x2={toSVGNumber(fX(this.state.newX1))}
+              y2={toSVGNumber(fY(this.state.newY2))}
             />
             <line
               className="element-line handle-hint"
-              x1={fX(this.state.newX2)}
-              y1={fY(this.state.newY1)}
-              x2={fX(this.state.newX2)}
-              y2={fY(this.state.newY2)}
+              x1={toSVGNumber(fX(this.state.newX2))}
+              y1={toSVGNumber(fY(this.state.newY1))}
+              x2={toSVGNumber(fX(this.state.newX2))}
+              y2={toSVGNumber(fY(this.state.newY2))}
             />
           </g>
         ) : null}

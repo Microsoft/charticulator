@@ -5,7 +5,7 @@ import * as React from "react";
 import { Geometry, Point, Prototypes, ZoomInfo } from "../../../core";
 import { DragContext, DragModifiers, Droppable } from "../../controllers";
 import * as globals from "../../globals";
-import { classNames } from "../../utils";
+import { classNames, toSVGNumber } from "../../utils";
 
 export interface DropZoneViewProps {
   zone: Prototypes.DropZones.Description;
@@ -99,10 +99,10 @@ export class DropZoneView
     return (
       <g className="dropzone-element-line">
         <line
-          x1={p1n.x}
-          y1={p1n.y}
-          x2={p2n.x}
-          y2={p2n.y}
+          x1={toSVGNumber(p1n.x)}
+          y1={toSVGNumber(p1n.y)}
+          x2={toSVGNumber(p2n.x)}
+          y2={toSVGNumber(p2n.y)}
           style={{ strokeLinecap: "butt" }}
         />
         {arrow1 > 0 ? <path d={this.makeClosePath(p1a1, p1a2, p1)} /> : null},
@@ -130,9 +130,9 @@ export class DropZoneView
     }
     return (
       <g
-        transform={`translate(${cx},${cy}) rotate(${
+        transform={`translate(${toSVGNumber(cx)},${toSVGNumber(cy)}) rotate(${
           ((angle + Math.PI) / Math.PI) * 180
-        }) translate(${dx},${dy}) ${extra}`}
+        }) translate(${toSVGNumber(dx)},${toSVGNumber(dy)}) ${extra}`}
       >
         <text
           className="dropzone-element-text"
@@ -193,12 +193,20 @@ export class DropZoneView
         ) => {
           const angleOffset = -90;
           const start = [
-            x + radius * Math.cos(Geometry.degreesToRadians(angleOffset + startAngle)),
-            y + radius * Math.sin(Geometry.degreesToRadians(angleOffset + startAngle)),
+            x +
+              radius *
+                Math.cos(Geometry.degreesToRadians(angleOffset + startAngle)),
+            y +
+              radius *
+                Math.sin(Geometry.degreesToRadians(angleOffset + startAngle)),
           ];
           const end = [
-            x + radius * Math.cos(Geometry.degreesToRadians(angleOffset + endAngle)),
-            y + radius * Math.sin(Geometry.degreesToRadians(angleOffset + endAngle)),
+            x +
+              radius *
+                Math.cos(Geometry.degreesToRadians(angleOffset + endAngle)),
+            y +
+              radius *
+                Math.sin(Geometry.degreesToRadians(angleOffset + endAngle)),
           ];
           const largeArcFlag = endAngle - startAngle < 180 ? 0 : 1;
           return [

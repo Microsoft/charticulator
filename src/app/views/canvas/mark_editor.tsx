@@ -21,7 +21,7 @@ import { ZoomableCanvas } from "../../components";
 import { DragContext, DragModifiers, Droppable } from "../../controllers";
 import { renderGraphicalElementSVG } from "../../renderer";
 import { AppStore, MarkSelection, Selection } from "../../stores";
-import { classNames } from "../../utils";
+import { classNames, toSVGNumber } from "../../utils";
 import { Button } from "../panels/widgets/controls";
 import { BoundingBoxView } from "./bounding_box";
 import {
@@ -735,10 +735,14 @@ export class SingleMarkView
             <line
               className="mark-guide"
               key={`k${idx}`}
-              x1={guide.value * this.state.zoom.scale + this.state.zoom.centerX}
-              x2={guide.value * this.state.zoom.scale + this.state.zoom.centerX}
+              x1={toSVGNumber(
+                guide.value * this.state.zoom.scale + this.state.zoom.centerX
+              )}
+              x2={toSVGNumber(
+                guide.value * this.state.zoom.scale + this.state.zoom.centerX
+              )}
               y1={0}
-              y2={this.props.height}
+              y2={toSVGNumber(this.props.height)}
             />
           );
         }
@@ -749,13 +753,13 @@ export class SingleMarkView
               className="mark-guide"
               key={`k${idx}`}
               x1={0}
-              x2={this.props.width}
-              y1={
+              x2={toSVGNumber(this.props.width)}
+              y1={toSVGNumber(
                 -guide.value * this.state.zoom.scale + this.state.zoom.centerY
-              }
-              y2={
+              )}
+              y2={toSVGNumber(
                 -guide.value * this.state.zoom.scale + this.state.zoom.centerY
-              }
+              )}
             />
           );
         }
@@ -767,46 +771,48 @@ export class SingleMarkView
               <circle
                 className="mark-guide"
                 key={`ck${idx}`}
-                cx={
+                cx={toSVGNumber(
                   axisGuide.angle * this.state.zoom.scale +
-                  this.state.zoom.centerX
-                }
-                cy={
+                    this.state.zoom.centerX
+                )}
+                cy={toSVGNumber(
                   -axisGuide.radius * this.state.zoom.scale +
-                  this.state.zoom.centerY
-                }
-                r={Math.abs(3 * this.state.zoom.scale)}
+                    this.state.zoom.centerY
+                )}
+                r={toSVGNumber(Math.abs(3 * this.state.zoom.scale))}
               />
               <circle
                 className="mark-guide"
                 key={`ck${idx}display`}
-                cx={
+                cx={toSVGNumber(
                   axisGuide.cx * this.state.zoom.scale + this.state.zoom.centerX
-                }
-                cy={
+                )}
+                cy={toSVGNumber(
                   -axisGuide.cy * this.state.zoom.scale +
-                  this.state.zoom.centerY
-                }
-                r={Math.abs(axisGuide.visibleRadius * this.state.zoom.scale)}
+                    this.state.zoom.centerY
+                )}
+                r={toSVGNumber(
+                  Math.abs(axisGuide.visibleRadius * this.state.zoom.scale)
+                )}
               />
               <line
                 key={`lk${idx}display`}
                 className="mark-guide"
-                x1={
+                x1={toSVGNumber(
                   axisGuide.cx * this.state.zoom.scale + this.state.zoom.centerX
-                }
-                y1={
+                )}
+                y1={toSVGNumber(
                   -axisGuide.cy * this.state.zoom.scale +
-                  this.state.zoom.centerY
-                }
-                x2={
+                    this.state.zoom.centerY
+                )}
+                x2={toSVGNumber(
                   axisGuide.angle * this.state.zoom.scale +
-                  this.state.zoom.centerX
-                }
-                y2={
+                    this.state.zoom.centerX
+                )}
+                y2={toSVGNumber(
                   -axisGuide.radius * this.state.zoom.scale +
-                  this.state.zoom.centerY
-                }
+                    this.state.zoom.centerY
+                )}
               />
             </>
           );
@@ -1273,10 +1279,14 @@ export class SingleMarkView
           <line
             className="mark-guide"
             key={`k${idx}`}
-            x1={guide.value * this.state.zoom.scale + this.state.zoom.centerX}
-            x2={guide.value * this.state.zoom.scale + this.state.zoom.centerX}
+            x1={toSVGNumber(
+              guide.value * this.state.zoom.scale + this.state.zoom.centerX
+            )}
+            x2={toSVGNumber(
+              guide.value * this.state.zoom.scale + this.state.zoom.centerX
+            )}
             y1={0}
-            y2={this.props.height}
+            y2={toSVGNumber(this.props.height)}
           />
         );
       }
@@ -1286,10 +1296,14 @@ export class SingleMarkView
           <line
             className="mark-guide"
             key={`k${idx}`}
-            y1={-guide.value * this.state.zoom.scale + this.state.zoom.centerY}
-            y2={-guide.value * this.state.zoom.scale + this.state.zoom.centerY}
+            y1={toSVGNumber(
+              -guide.value * this.state.zoom.scale + this.state.zoom.centerY
+            )}
+            y2={toSVGNumber(
+              -guide.value * this.state.zoom.scale + this.state.zoom.centerY
+            )}
             x1={0}
-            x2={this.props.width}
+            x2={toSVGNumber(this.props.width)}
           />
         );
       }
@@ -1307,9 +1321,11 @@ export class SingleMarkView
     pt = Geometry.applyZoom(this.state.zoom, pt);
     return (
       <path
-        d={`M${pt.x - 5},${pt.y}L${pt.x},${pt.y - 5}L${pt.x + 5},${pt.y}L${
+        d={`M${toSVGNumber(pt.x - 5)},${toSVGNumber(pt.y)}L${toSVGNumber(
           pt.x
-        },${pt.y + 5}Z`}
+        )},${toSVGNumber(pt.y - 5)}L${pt.x + 5},${toSVGNumber(
+          pt.y
+        )}L${toSVGNumber(pt.x)},${toSVGNumber(pt.y + 5)}Z`}
         className="mark-anchor"
       />
     );
@@ -1530,16 +1546,16 @@ export class SingleMarkView
               ref="canvas"
               x={0}
               y={0}
-              width={this.props.width - 4}
-              height={this.props.height}
+              width={toSVGNumber(this.props.width - 4)}
+              height={toSVGNumber(this.props.height)}
             >
               <rect
                 ref="canvasInteraction"
                 className="interaction-handler"
                 x={0}
                 y={0}
-                width={this.props.width}
-                height={this.props.height}
+                width={toSVGNumber(this.props.width)}
+                height={toSVGNumber(this.props.height)}
               />
             </svg>
             <div className="mark-view-container-notice">

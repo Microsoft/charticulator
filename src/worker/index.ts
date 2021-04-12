@@ -8,6 +8,7 @@ import {
   Specification,
   zipArray,
 } from "../core";
+import { AttributeMap, ChartState } from "../core/specification";
 import { WorkerRPC } from "./communication";
 
 export { CharticulatorWorkerProcess } from "./worker_main";
